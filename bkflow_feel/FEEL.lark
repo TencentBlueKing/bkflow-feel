@@ -1,0 +1,116 @@
+?start: expr
+
+?expr: disjunction
+?disjunction: conjunction
+            | disjunction "or" conjunction   -> or_
+?conjunction: comparison
+            | conjunction "and" comparison   -> and_
+?comparison: equality
+           | comparison ">" equality       -> gt
+           | comparison "<" equality       -> lt
+           | comparison "<=" equality     -> lte
+           | comparison ">=" equality     -> gte
+?equality: arithmetic
+           | equality "=" arithmetic        -> eq
+           | equality "!=" arithmetic       -> ne
+?arithmetic: term
+           | term "+" term                   -> add
+           | term "-" term                   -> sub
+?term: factor
+     | factor "*" factor                   -> mul
+     | factor "/" factor                   -> div
+     | factor "**" factor                  -> pow
+     | factor "between" factor "and" factor -> between
+
+?factor:  number
+        | string
+        | true
+        | false
+        | null
+        | list_
+        | context_operations
+        | context
+        | list_operations
+        | close_range_group
+        | open_range_group
+        | left_open_range_group
+        | right_open_range_group
+        | range_operations
+        | functions
+        | variable
+        | "(" expr ")"
+
+?list_operations: list_some
+                | list_every
+                | list_item
+                | list_filter
+
+?context_operations: context_item
+
+?range_operations: in_
+
+?functions: string_func
+            | before_func
+            | after_func
+            | includes_func
+            | now_func
+            | today_func
+            | month_of_year_func
+            | day_of_week_func
+            | date_func
+            | time_func
+            | date_and_time_func
+            | func_invocation
+
+number: SIGNED_INT | SIGNED_FLOAT
+string: STRING
+variable: NAME
+true: "true"
+false: "false"
+null: "null"
+string_func: "string" "(" expr ")" -> to_string
+
+context_item: (context | variable ) ("." NAME)+
+pair: (STRING | NAME) ":" expr
+context: "{" (pair ("," pair)*)? "}"
+
+list_: "[" (expr ("," expr)*)? "]"
+list_some: "some" NAME "in" list_ ("," NAME "in" list_)* "satisfies" expr
+list_every: "every" NAME "in" list_ ("," NAME "in" list_)* "satisfies" expr
+list_item: (list_ | variable) "[" SIGNED_INT "]"
+list_filter: (list_ | variable) "[" expr "]"
+
+range_atom: SIGNED_INT | date_func | time_func | date_and_time_func | variable
+close_range_group: "[" range_atom ".." range_atom "]"
+open_range_group: "(" range_atom ".." range_atom ")"
+left_open_range_group: "(" range_atom ".." range_atom "]"
+right_open_range_group: "[" range_atom ".." range_atom ")"
+in_: range_atom "in" ( close_range_group | open_range_group | left_open_range_group | right_open_range_group | list_)
+before_func: "before" "(" (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) "," (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) ")"
+after_func: "after" "(" (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) "," (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) ")"
+includes_func: "includes" "(" (close_range_group | open_range_group | left_open_range_group | right_open_range_group) "," (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) ")"
+
+func_invocation: func_name "(" (expr ("," expr)* | named_args)? ")"
+named_args: NAME ":" expr ("," NAME ":" expr)*
+func_name: NAME+
+
+date: /\d{4}-\d{2}-\d{2}/
+time: /\d{2}:\d{2}:\d{2}/ timezone?
+timezone: tz_offset | tz_name
+tz_offset: /[\+\-]\d{2}:\d{2}/
+tz_name: "@" NAME "/" NAME | "Z"
+date_and_time: date "T" time
+now_func: "now" "(" ")"
+today_func: "today" "(" ")"
+month_of_year_func: "month" "of" "year" "(" (date_func | date_and_time_func) ")"
+day_of_week_func: "day" "of" "week" "(" (date_func | date_and_time_func) ")"
+date_func: "date" "(" "\"" date "\"" ")"
+time_func: "time" "(" "\"" time "\"" ")"
+date_and_time_func: "date" "and" "time" "(" "\"" date_and_time "\"" ")"
+
+SIGNED_INT: /[-+]?[0-9]+/
+SIGNED_FLOAT: /[-+]?[0-9]*\.[0-9]+/
+%import common.CNAME -> NAME
+%import common.ESCAPED_STRING -> STRING
+%import common.WS_INLINE
+%ignore WS_INLINE

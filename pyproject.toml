@@ -1,0 +1,33 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "bkflow-feel"
+description = "A FEEL (Friendly Enough Expression Language) parser for Python"
+authors = [{name = "normal-wls", email = "weishi.swee@qq.com"}]
+readme = "README.md"
+dynamic = ["version"]
+dependencies = [
+    "lark >=1.1.7,<2",
+    "python-dateutil <3",
+    "pytz <2024",
+    "pydantic <3",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest >=7.0.1,<8",
+    "pytest-benchmark[histogram] >=3.4.1,<4"
+]
+
+[tool.flit.module]
+name = "bkflow_feel"
+
+
+[tool.black]
+line-length = 120
+fast = true
+
+[tool.isort]
+line_length = 120
