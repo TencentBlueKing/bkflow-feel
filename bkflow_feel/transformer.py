@@ -40,7 +40,7 @@ from .parsers import (
     TodayFunc,
     ToString,
     TZInfo,
-    Variable,
+    Variable, IsDefinedFunc, GetOrElseFunc,
 )
 
 
@@ -215,6 +215,12 @@ class FEELTransformer(Transformer):
 
     def includes_func(self, left, right):
         return IncludesFunc(left, right)
+
+    def get_or_else_func(self, value, default):
+        return GetOrElseFunc(value, default)
+
+    def is_defined_func(self, value):
+        return IsDefinedFunc(value)
 
     def context(self, *args):
         return Context(args)

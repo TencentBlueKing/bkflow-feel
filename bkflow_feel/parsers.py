@@ -351,6 +351,18 @@ class IncludesFunc(BinaryOperator):
         return left_operation and right_operation
 
 
+class GetOrElseFunc(BinaryOperator):
+    def evaluate(self, context):
+        left_val = self.left.evaluate(context)
+        right_val = self.right.evaluate(context)
+        return left_val if left_val is not None else right_val
+
+
+class IsDefinedFunc(CommonExpression):
+    def evaluate(self, context):
+        return self.value.evaluate(context) is not None
+
+
 class Not(Expression):
     def __init__(self, value):
         self.value = value
