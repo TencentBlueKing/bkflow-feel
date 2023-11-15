@@ -38,6 +38,8 @@
       - [before 函数](#before-函数)
       - [after 函数](#after-函数)
       - [includes 函数](#includes-函数)
+      - [get or else 函数](#get-or-else-函数)
+      - [is defined 函数](#is-defined-函数)
     - [开发者自定义函数调用](#开发者自定义函数调用)
 
 <!-- /TOC -->
@@ -401,6 +403,23 @@ after(1, 5) // False
 ```
 includes([1..4], 1) // True
 includes([1..5], 6) // False
+```
+
+
+#### get or else 函数
+如果【参数1】为 null，则返回【参数2】，否则返回【参数1】
+
+```
+get or else(null, 1) // 1
+get or else(1, 2) // 1
+```
+
+#### is defined 函数
+判断【参数】是否为 null，返回 bool
+
+```
+is defined(1) // True
+is defined(null) // False
 ```
 
 

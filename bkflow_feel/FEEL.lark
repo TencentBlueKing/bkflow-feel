@@ -60,6 +60,8 @@
             | date_func
             | time_func
             | date_and_time_func
+            | get_or_else_func
+            | is_defined_func
             | func_invocation
 
 number: SIGNED_INT | SIGNED_FLOAT
@@ -89,6 +91,8 @@ in_: range_atom "in" ( close_range_group | open_range_group | left_open_range_gr
 before_func: "before" "(" (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) "," (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) ")"
 after_func: "after" "(" (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) "," (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) ")"
 includes_func: "includes" "(" (close_range_group | open_range_group | left_open_range_group | right_open_range_group) "," (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) ")"
+get_or_else_func: "get" "or" "else" "(" expr "," expr ")"
+is_defined_func: "is" "defined" "(" expr ")"
 
 func_invocation: func_name "(" (expr ("," expr)* | named_args)? ")"
 named_args: NAME ":" expr ("," NAME ":" expr)*

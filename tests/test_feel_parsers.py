@@ -183,6 +183,14 @@ BUILD_IN_FUNCS = [
     ("includes([5..8], [1..5])", {}, False),
     ("includes([1..10], (1..10))", {}, True),
     ("includes([1..5), [1..5])", {}, False),
+    ("is defined(1)", {}, True),
+    ("is defined(null)", {}, False),
+    ("is defined(x)", {}, False),
+    ("is defined(x)", {"x": 1}, True),
+    ("is defined(x.y)", {"x": 1}, False),
+    ('get or else(null, "abc")', {}, "abc"),
+    ("get or else(0, 1)", {}, 0),
+    ("get or else(null, null)", {}, None),
 ]
 
 DEFINED_FUNCS = [

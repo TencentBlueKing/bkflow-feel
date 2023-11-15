@@ -1,5 +1,9 @@
 # Release Notes
 
+# 1.1.0
+    - 支持 get or else 和 is defined 内置函数
+    - 文档优化
+
 # 1.0.0
     - 大幅优化 FEEL 语法解析性能
 
