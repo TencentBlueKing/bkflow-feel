@@ -106,3 +106,12 @@ parse_expression(expression="hello world with params(a:1,b:2)")  # {'a': 1, 'b':
 
 parse_expression(expression="func with params(1,2,3)")  # With params: 1, 2, 3
 ```
+
+## 支持语法详情
+见[语法文档](./docs/grammer.md)
+
+## benchmark
+这里通过 pytest-benchmark 执行单测得到对应的解析性能结果：
+![](./docs/pics/benchmark.svg)
+
+可以看到，对于单测样例，bkflow-feel 的解析处理时间大致在 40+us - 200+us，换算成每秒可处理的简单表达式个数约为 5000 - 25000 个。
