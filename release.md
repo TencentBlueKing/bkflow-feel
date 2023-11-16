@@ -1,5 +1,8 @@
 # Release Notes
 
+# 1.1.1
+    - 修复部分内置函数不支持问题
+
 # 1.1.0
     - 支持 get or else 和 is defined 内置函数
     - 文档优化

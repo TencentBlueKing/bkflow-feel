@@ -22,21 +22,27 @@ STRING_DATA = [
     ('"hello"', {}, "hello"),
     ('"order-" + string(123)', {}, "order-123"),
     ('"order-" + string(123.1)', {}, "order-123.1"),
+    ('starts with("abc", "a")', {}, True),
+    ('starts with("abc", "b")', {}, False),
+    ('ends with("cba", "a")', {}, True),
+    ('ends with("cba", "b")', {}, False),
+    ('matches("foobar", "^fo*bar")', {}, True),
+    ('contains("abc", "b")', {}, True),
+    ('contains("abc", "d")', {}, False),
 ]
 BOOLEAN_DATA = [
     ("true", {}, True),
     ("false", {}, False),
+    ("1 = 1", {}, True),
+    ("1 != 1", {}, False),
+    ("2 > 1", {}, True),
+    ("2 < 1", {}, False),
+    ("1 >= 1", {}, True),
+    ("1 <= 1", {}, True),
     ("5 between 3 and 7", {}, True),
-    (
-        "5 between 3 and 7 and true",
-        {},
-        True,
-    ),
-    (
-        "true and false",
-        {},
-        False,
-    ),
+    ("5 between 3 and 7 and true", {}, True),
+    ("true and false", {}, False),
+    ("false or false", {}, False),
 ]
 LIST_DATA = [
     ("[]", {}, []),
@@ -52,6 +58,16 @@ LIST_DATA = [
     ("[{x:1, y:2}, {x:2, y:3}][x=1]", {}, [{"x": 1, "y": 2}]),
     ("[{x:1, y:2}, {x:2, y:3}, {y:3}][x>1]", {}, [{"x": 2, "y": 3}]),
     ("[{x:1, y:2}, {x:2, y:3}, {y:3}][x>1]", {"x": 50}, [{"x": 2, "y": 3}]),
+    ("all([true, false])", {}, False),
+    ("all([false, false])", {}, False),
+    ("all([true, true])", {}, True),
+    ("any([true, false])", {}, True),
+    ("any([false, false])", {}, False),
+    ("any([true, true])", {}, True),
+    ("count([])", {}, 0),
+    ("count([1,2,3,4])", {}, 4),
+    ("list contains([1, 2, 3], 2)", {}, True),
+    ("list contains([1, 2, 3], 5)", {}, False),
     ("some x in [1,2,3] satisfies x > 2", {}, True),
     ("some x in [4,4,3], y in [2,3,4] satisfies x < y", {}, True),
     ("some x in [1,2,3], y in [2,3,4], z in [0,0,0] satisfies x > (y+z)", {}, False),
@@ -76,6 +92,7 @@ CONTEXT_DATA = [
     ("{a: {c: 3}, b: 2}.a.c", {}, 3),
     ("{a: {c: 3}, b: 2}.c", {}, None),
     ("{a: {c: 3}, b: 2}.a.d", {}, None),
+    ("[{a: 1, b: 2},{a: 2,b: 10}][b<7]", {}, [{"a": 1, "b": 2}]),
 ]
 RANGE_DATA = [
     ("5 in [1,3,5,7]", {}, True),
@@ -191,6 +208,9 @@ BUILD_IN_FUNCS = [
     ('get or else(null, "abc")', {}, "abc"),
     ("get or else(0, 1)", {}, 0),
     ("get or else(null, null)", {}, None),
+    ("not(true)", {}, False),
+    ("not(false)", {}, True),
+    ("not(null)", {}, True),
 ]
 
 DEFINED_FUNCS = [
