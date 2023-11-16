@@ -44,12 +44,23 @@
                 | list_every
                 | list_item
                 | list_filter
+                | list_all
+                | list_any
+                | list_count
+                | list_contains
+
+?string_operations: to_string
+                | matches
+                | contains
+                | starts_with
+                | ends_with
+
 
 ?context_operations: context_item
 
 ?range_operations: in_
 
-?functions: string_func
+?functions: string_operations
             | before_func
             | after_func
             | includes_func
@@ -62,6 +73,7 @@
             | date_and_time_func
             | get_or_else_func
             | is_defined_func
+            | not_func
             | func_invocation
 
 number: SIGNED_INT | SIGNED_FLOAT
@@ -70,7 +82,12 @@ variable: NAME
 true: "true"
 false: "false"
 null: "null"
-string_func: "string" "(" expr ")" -> to_string
+
+to_string: "string" "(" expr ")"
+matches: "matches" "(" expr "," expr ")"
+contains: "contains" "(" expr "," expr ")"
+starts_with: "starts" "with" "(" expr "," expr ")"
+ends_with: "ends" "with" "(" expr "," expr ")"
 
 context_item: (context | variable ) ("." NAME)+
 pair: (STRING | NAME) ":" expr
@@ -81,6 +98,11 @@ list_some: "some" NAME "in" list_ ("," NAME "in" list_)* "satisfies" expr
 list_every: "every" NAME "in" list_ ("," NAME "in" list_)* "satisfies" expr
 list_item: (list_ | variable) "[" SIGNED_INT "]"
 list_filter: (list_ | variable) "[" expr "]"
+list_all: "all" "(" list_ ")"
+list_any: "any" "(" list_ ")"
+list_count: "count" "(" list_ ")"
+list_contains: "list" "contains" "(" expr "," expr ")"
+
 
 range_atom: SIGNED_INT | date_func | time_func | date_and_time_func | variable
 close_range_group: "[" range_atom ".." range_atom "]"
@@ -93,6 +115,7 @@ after_func: "after" "(" (range_atom | close_range_group | open_range_group | lef
 includes_func: "includes" "(" (close_range_group | open_range_group | left_open_range_group | right_open_range_group) "," (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) ")"
 get_or_else_func: "get" "or" "else" "(" expr "," expr ")"
 is_defined_func: "is" "defined" "(" expr ")"
+not_func: "not" "(" expr ")"
 
 func_invocation: func_name "(" (expr ("," expr)* | named_args)? ")"
 named_args: NAME ":" expr ("," NAME ":" expr)*

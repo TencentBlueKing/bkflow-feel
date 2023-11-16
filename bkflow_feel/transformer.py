@@ -143,10 +143,10 @@ class FEELTransformer(Transformer):
     def gt(self, left, right):
         return SameTypeBinaryOperator("greater_than", left, right)
 
-    def le(self, left, right):
+    def lte(self, left, right):
         return SameTypeBinaryOperator("less_than_or_equal", left, right)
 
-    def ge(self, left, right):
+    def gte(self, left, right):
         return SameTypeBinaryOperator("greater_than_or_equal", left, right)
 
     def and_(self, left, right):
@@ -161,7 +161,7 @@ class FEELTransformer(Transformer):
     def in_(self, left, right):
         return In(left, right)
 
-    def not_(self, value):
+    def not_func(self, value):
         return Not(value)
 
     def date(self, value):
