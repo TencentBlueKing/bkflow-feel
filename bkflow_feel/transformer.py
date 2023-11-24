@@ -263,7 +263,7 @@ class FEELTransformer(Transformer):
 
     def func_invocation(self, func_name, *args):
         func_name = " ".join([token.value for token in func_name.children])
-        if len(args) == 1 and getattr(args[0], "data") and args[0].data.value == "named_args":
+        if len(args) == 1 and getattr(args[0], "data", None) and args[0].data.value == "named_args":
             args_pairs = args[0].children
             named_args = {args_pairs[i].value: args_pairs[i + 1] for i in range(0, len(args_pairs), 2)}
             return FuncInvocation(func_name, named_args=named_args)
