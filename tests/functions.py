@@ -45,3 +45,14 @@ class FuncWithInputsValidation(BaseFEELInvocation):
 
     def invoke(self, a, b, *args, **kwargs):
         return {"a": a, "b": b, "args": args, "kwargs": kwargs}
+
+
+class SingleParamFuncValidation(BaseFEELInvocation):
+    class Meta:
+        func_name = "func with single param"
+
+    class Inputs(InvocationInputsModel):
+        b: int
+
+    def invoke(self, b):
+        return b

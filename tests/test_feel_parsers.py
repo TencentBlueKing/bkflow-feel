@@ -243,6 +243,8 @@ DEFINED_FUNCS = [
     ("func with inputs validation(1,2,3,4,5)", {}, None),
     ("func with inputs validation(a:1, b:2, c:3)", {}, {"a": 1, "b": 2, "args": (), "kwargs": {"c": 3}}),
     ("func with inputs validation(1,2)", {}, None),
+    ("func with single param(1)", {}, 1),
+    ("func with single param(b:1)", {}, 1),
 ]
 
 
