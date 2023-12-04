@@ -104,7 +104,7 @@ list_count: "count" "(" list_ ")"
 list_contains: "list" "contains" "(" expr "," expr ")"
 
 
-range_atom: SIGNED_INT | date_func | time_func | date_and_time_func | variable
+range_atom: number | date_func | time_func | date_and_time_func | variable
 close_range_group: "[" range_atom ".." range_atom "]"
 open_range_group: "(" range_atom ".." range_atom ")"
 left_open_range_group: "(" range_atom ".." range_atom "]"
