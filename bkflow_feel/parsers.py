@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import abc
 import datetime
+import json
 import logging
 import re
 
@@ -361,6 +362,12 @@ class GetOrElseFunc(BinaryOperator):
 class IsDefinedFunc(CommonExpression):
     def evaluate(self, context):
         return self.value.evaluate(context) is not None
+
+
+class JsonLoadsFunc(CommonExpression):
+    def evaluate(self, context):
+        value = self.value.evaluate(context)
+        return json.loads(value)
 
 
 class Not(Expression):

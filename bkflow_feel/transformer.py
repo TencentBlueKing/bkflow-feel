@@ -16,8 +16,11 @@ from .parsers import (
     Expr,
     FuncInvocation,
     FunctionCall,
+    GetOrElseFunc,
     In,
     IncludesFunc,
+    IsDefinedFunc,
+    JsonLoadsFunc,
     List,
     ListEvery,
     ListFilter,
@@ -40,7 +43,7 @@ from .parsers import (
     TodayFunc,
     ToString,
     TZInfo,
-    Variable, IsDefinedFunc, GetOrElseFunc,
+    Variable,
 )
 
 
@@ -221,6 +224,9 @@ class FEELTransformer(Transformer):
 
     def is_defined_func(self, value):
         return IsDefinedFunc(value)
+
+    def json_loads_func(self, value):
+        return JsonLoadsFunc(value)
 
     def context(self, *args):
         return Context(args)
