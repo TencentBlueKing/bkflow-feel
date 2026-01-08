@@ -1,5 +1,8 @@
 # Release Notes
 
+# 1.2.1
+    - 新增 `json loads` 内置函数，支持将 JSON 字符串解析为 Python 对象
+
 # 1.2.0
     - 范围操作新增支持小数
 

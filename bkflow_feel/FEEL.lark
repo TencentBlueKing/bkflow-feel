@@ -73,6 +73,7 @@
             | date_and_time_func
             | get_or_else_func
             | is_defined_func
+            | json_loads_func
             | not_func
             | func_invocation
 
@@ -115,6 +116,7 @@ after_func: "after" "(" (range_atom | close_range_group | open_range_group | lef
 includes_func: "includes" "(" (close_range_group | open_range_group | left_open_range_group | right_open_range_group) "," (range_atom | close_range_group | open_range_group | left_open_range_group | right_open_range_group) ")"
 get_or_else_func: "get" "or" "else" "(" expr "," expr ")"
 is_defined_func: "is" "defined" "(" expr ")"
+json_loads_func: "json" "loads" "(" expr ")"
 not_func: "not" "(" expr ")"
 
 func_invocation: func_name "(" (expr ("," expr)* | named_args)? ")"
