@@ -216,6 +216,14 @@ BUILD_IN_FUNCS = [
     ("not(true)", {}, False),
     ("not(false)", {}, True),
     ("not(null)", {}, True),
+    # json loads
+    ('json loads(data)', {'data': '{"name": "test", "value": 123}'}, {"name": "test", "value": 123}),
+    ('json loads(arr)', {'arr': '[1, 2, 3]'}, [1, 2, 3]),
+    ('json loads(nested)', {'nested': '{"items": [1, 2], "info": {"key": "val"}}'}, {"items": [1, 2], "info": {"key": "val"}}),
+    ('json loads("123")', {}, 123),
+    ('json loads("true")', {}, True),
+    ('json loads("false")', {}, False),
+    ('json loads("null")', {}, None),
 ]
 
 DEFINED_FUNCS = [
