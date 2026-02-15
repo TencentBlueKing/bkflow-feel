@@ -95,13 +95,13 @@ pair: (STRING | NAME) ":" expr
 context: "{" (pair ("," pair)*)? "}"
 
 list_: "[" (expr ("," expr)*)? "]"
-list_some: "some" NAME "in" list_ ("," NAME "in" list_)* "satisfies" expr
-list_every: "every" NAME "in" list_ ("," NAME "in" list_)* "satisfies" expr
+list_some: "some" NAME "in" list_ ("," NAME "in" (list_ | variable))* "satisfies" expr
+list_every: "every" NAME "in" list_ ("," NAME "in" (list_ | variable))* "satisfies" expr
 list_item: (list_ | variable) "[" SIGNED_INT "]"
 list_filter: (list_ | variable) "[" expr "]"
-list_all: "all" "(" list_ ")"
-list_any: "any" "(" list_ ")"
-list_count: "count" "(" list_ ")"
+list_all: "all" "(" (list_ | variable) ")"
+list_any: "any" "(" (list_ | variable) ")"
+list_count: "count" "(" (list_ | variable) ")"
 list_contains: "list" "contains" "(" expr "," expr ")"
 
 
